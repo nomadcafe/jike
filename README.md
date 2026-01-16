@@ -1,20 +1,73 @@
+# 即刻News
+
 ![](/public/og-image.png)
 
-English | [简体中文](README.zh-CN.md) | [日本語](README.ja-JP.md)
+**优雅地阅读实时热门新闻**
 
-> [!NOTE]
-> This is a demo version currently supporting Chinese only. A full-featured version with better customization and English content support will be released later.
+🌐 **在线访问**：[https://jike.news](https://jike.news)
 
-**_Elegant reading of real-time and hottest news_**
+即刻News 是一个实时新闻聚合阅读器，汇集全球热点新闻，提供优雅的阅读体验。
 
-## Features
+## 功能特性
 
-- Clean and elegant UI design for optimal reading experience
-- Real-time updates on trending news
-- GitHub OAuth login with data synchronization
-- 30-minute default cache duration (logged-in users can force refresh)
-- Adaptive scraping interval (minimum 2 minutes) based on source update frequency to optimize resource usage and prevent IP bans
-- support MCP server
+- 🎨 **优雅的阅读界面** - 简洁美观的 UI 设计，专注于阅读体验
+- ⚡ **实时更新** - 实时获取最新热点新闻，支持多种新闻源
+- 🔐 **GitHub 登录** - 支持 GitHub OAuth 登录及数据同步
+- 💾 **智能缓存** - 默认缓存时长为 30 分钟，登录用户可强制刷新
+- 🚀 **自适应抓取** - 根据内容源更新频率动态调整抓取间隔（最快每 2 分钟），避免频繁抓取导致 IP 被封禁
+- 📱 **PWA 支持** - 支持渐进式 Web 应用，可安装到设备
+- 🔍 **搜索功能** - 快速搜索新闻内容
+- 📊 **流量统计** - 集成 Google Analytics 统计访问数据
+
+## 新闻源
+
+项目支持丰富的新闻源，包括但不限于：
+
+- **国内新闻**：微博、知乎、36氪、腾讯新闻、百度、今日头条、澎湃新闻等
+- **国际新闻**：纽约时报中文网、联合早报（国内版）、Hacker News、Product Hunt 等
+- **科技资讯**：V2EX、GitHub、酷安、少数派、掘金、IT之家等
+- **财经资讯**：华尔街见闻、雪球、金十数据、MKTNews 等
+- **娱乐内容**：B站、抖音、快手、豆瓣、Steam 等
+- **其他**：虎扑、贴吧、Freebuf 等
+
+## 技术栈
+
+- **前端**：React 19 + TypeScript + TanStack Router + TanStack Query
+- **样式**：UnoCSS
+- **后端**：Nitro (基于 H3)
+- **构建工具**：Vite
+- **数据库**：支持 Cloudflare D1、SQLite 等多种数据库
+- **部署**：Cloudflare Pages / Vercel / Docker
+
+## 快速开始
+
+### 环境要求
+
+- Node.js >= 20
+- pnpm
+
+### 安装依赖
+
+```bash
+corepack enable
+pnpm i
+```
+
+### 开发
+
+```bash
+pnpm dev
+```
+
+### 构建
+
+```bash
+pnpm build
+```
+
+## MCP Server 支持
+
+项目支持 MCP (Model Context Protocol) Server，可以在 AI 应用中集成。使用 jike.news 的配置示例：
 
 ```json
 {
@@ -32,98 +85,27 @@ English | [简体中文](README.zh-CN.md) | [日本語](README.ja-JP.md)
   }
 }
 ```
-You can change the `BASE_URL` to your own domain.
 
-## Deployment
+你也可以将 `BASE_URL` 修改为你自己的域名。
 
-### Basic Deployment
+## 项目结构
 
-For deployments without login and caching:
-
-1. Fork this repository
-2. Import to platforms like Cloudflare Page or Vercel
-
-### Cloudflare Page Configuration
-
-- Build command: `pnpm run build`
-- Output directory: `dist/output/public`
-
-### GitHub OAuth Setup
-
-1. [Create a GitHub App](https://github.com/settings/applications/new)
-2. No special permissions required
-3. Set callback URL to: `https://your-domain.com/api/oauth/github` (replace `your-domain` with your actual domain)
-4. Obtain Client ID and Client Secret
-
-### Environment Variables
-
-Refer to `example.env.server`. For local development, rename it to `.env.server` and configure:
-
-```env
-# Github Client ID
-G_CLIENT_ID=
-# Github Client Secret
-G_CLIENT_SECRET=
-# JWT Secret, usually the same as Client Secret
-JWT_SECRET=
-# Initialize database, must be set to true on first run, can be turned off afterward
-INIT_TABLE=true
-# Whether to enable cache
-ENABLE_CACHE=true
+```
+├── server/          # 后端服务
+│   ├── api/        # API 路由
+│   ├── sources/    # 新闻源实现
+│   └── utils/      # 工具函数
+├── src/            # 前端代码
+│   ├── components/ # 组件
+│   ├── routes/     # 路由
+│   └── hooks/      # Hooks
+├── shared/         # 共享代码
+│   ├── pre-sources.ts  # 新闻源配置
+│   └── sources.json    # 生成的源列表
+└── public/         # 静态资源
 ```
 
-### Database Support
+## 许可证
 
-Supported database connectors: https://db0.unjs.io/connectors
-**Cloudflare D1 Database** is recommended.
+MIT License
 
-1. Create D1 database in Cloudflare Worker dashboard
-2. Configure database_id and database_name in wrangler.toml
-3. If wrangler.toml doesn't exist, rename example.wrangler.toml and modify configurations
-4. Changes will take effect on next deployment
-
-### Docker Deployment
-
-In project root directory:
-
-```sh
-docker compose up
-```
-
-You can also set Environment Variables in `docker-compose.yml`.
-
-## Development
-
-> [!Note]
-> Requires Node.js >= 20
-
-```sh
-corepack enable
-pnpm i
-pnpm dev
-```
-
-### Adding Data Sources
-
-Refer to `shared/sources` and `server/sources` directories. The project provides complete type definitions and a clean architecture.
-
-For detailed instructions on how to add new sources, see [CONTRIBUTING.md](CONTRIBUTING.md).
-
-## Roadmap
-
-- Add **multi-language support** (English, Chinese, more to come).
-- Improve **personalization options** (category-based news, saved preferences).
-- Expand **data sources** to cover global news in multiple languages.
-
-**_release when ready_**
-![](https://testmnbbs.oss-cn-zhangjiakou.aliyuncs.com/pic/20250328172146_rec_.gif?x-oss-process=base_webp)
-
-## Contributing
-
-Contributions are welcome! Feel free to submit pull requests or create issues for feature requests and bug reports.
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines on how to contribute, especially for adding new data sources.
-
-## License
-
-[MIT](./LICENSE) © ourongxing
