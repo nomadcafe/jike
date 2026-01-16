@@ -11,7 +11,6 @@ export default defineEventHandler(async (event) => {
     await server.connect(transport)
     await transport.handleRequest(req, res, await readBody(event))
     res.on("close", () => {
-      // console.log("Request closed")
       transport.close()
       server.close()
     })
