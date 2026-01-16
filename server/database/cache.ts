@@ -41,8 +41,10 @@ export class Cache {
   }
 
   async getEntire(keys: string[]): Promise<CacheInfo[]> {
-    const keysStr = keys.map(k => `id = '${k}'`).join(" or ")
-    const res = await this.db.prepare(`SELECT id, data, updated FROM cache WHERE ${keysStr}`).all() as any
+    if (!keys.length) return []
+    // 使用参数化查询防止 SQL 注入
+    const placeholders = keys.map(() => "?").join(",")
+    const res = await this.db.prepare(`SELECT id, data, updated FROM cache WHERE id IN (${placeholders})`).bind(...keys).all() as any
     const rows = (res.results ?? res) as CacheRow[]
 
     /**
@@ -74,7 +76,6 @@ export class Cache {
 export async function getCacheTable() {
   try {
     const db = useDatabase()
-    // logger.info("db: ", db.getInstance())
     if (process.env.ENABLE_CACHE === "false") return
     const cacheTable = new Cache(db)
     if (process.env.INIT_TABLE !== "false") await cacheTable.init()
