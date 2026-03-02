@@ -324,7 +324,6 @@
   },
   "producthunt": {
     "name": "Product Hunt",
-    "type": "hottest",
     "column": "tech",
     "home": "https://www.producthunt.com/",
     "color": "red",
