@@ -1,4 +1,4 @@
-# 即刻News
+# 即刻News（newsnow）
 
 ![](/public/og-image.png)
 
