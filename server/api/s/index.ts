@@ -68,7 +68,7 @@ export default defineEventHandler(async (event): Promise<SourceResponse> => {
         items: newData,
       }
     } catch (e) {
-      if (cache!) {
+      if (cache) {
         return {
           status: "cache",
           id,
