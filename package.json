@@ -50,7 +50,6 @@
     "md5": "^2.3.0",
     "ofetch": "^1.5.1",
     "overlayscrollbars": "^2.14.0",
-    "pnpm": "^10.30.3",
     "react": "^19.0.4",
     "react-device-detect": "^2.2.3",
     "react-dom": "^19.0.4",
