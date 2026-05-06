@@ -14,6 +14,33 @@ export interface UpdateGroup {
 
 export const updatelog: UpdateGroup[] = [
   {
+    date: "2026-05-07",
+    entries: [
+      {
+        type: "source",
+        scope: "科技列扩充",
+        title: "新增 5 个科技 / 融资资讯源",
+        description: "Startup Daily（澳洲及亚太创业）、TechCrunch（综合科技）、Crunchbase News（全球融资）、Sifted（欧洲科技深度）、投资界（中文 VC/PE）。",
+      },
+      {
+        type: "feat",
+        scope: "SEO",
+        title: "改善搜索引擎收录",
+        description: "各栏目和「更新日志」页现在拥有独立的 title 和 canonical 链接，sitemap 也补全；过去所有页面共享同一个站点标题，搜索引擎当作同一页处理。",
+      },
+      {
+        type: "fix",
+        scope: "FastBull",
+        title: "修复条目重复显示",
+      },
+      {
+        type: "fix",
+        scope: "ProductHunt",
+        title: "未配置 API token 时不再报错",
+      },
+    ],
+  },
+  {
     date: "2026-05-06",
     entries: [
       {
