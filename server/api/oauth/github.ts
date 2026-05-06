@@ -3,6 +3,8 @@ import { SignJWT } from "jose"
 import { UserTable } from "#/database/user"
 
 export default defineEventHandler(async (event) => {
+  const jwtSecret = process.env.JWT_SECRET
+  if (!jwtSecret) throw new Error("JWT_SECRET is not configured")
   const db = useDatabase()
   const userTable = db ? new UserTable(db) : undefined
   if (!userTable) throw new Error("db is not defined")
@@ -51,7 +53,7 @@ export default defineEventHandler(async (event) => {
   })
     .setExpirationTime("60d")
     .setProtectedHeader({ alg: "HS256" })
-    .sign(new TextEncoder().encode(process.env.JWT_SECRET!))
+    .sign(new TextEncoder().encode(jwtSecret))
 
   // nitro 有 bug，在 cloudflare 里没法 set cookie
   // seconds
