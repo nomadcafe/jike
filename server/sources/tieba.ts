@@ -20,7 +20,7 @@ export default defineSource(async () => {
       return {
         id: k.topic_id,
         title: k.topic_name,
-        url: k.topic_url,
+        url: k.topic_url.replace(/&amp;/g, "&"),
       }
     })
 })
