@@ -3,6 +3,13 @@ import { type UpdateType, updatelog } from "~/data/updatelog"
 
 export const Route = createFileRoute("/updatelog")({
   component: UpdatelogPage,
+  head: () => ({
+    meta: [
+      { title: "更新日志 - 即刻News" },
+      { name: "description", content: "即刻News 站点近期改动与修复记录。" },
+    ],
+    links: [{ rel: "canonical", href: "https://jike.news/updatelog" }],
+  }),
 })
 
 const typeLabel: Record<UpdateType, string> = {

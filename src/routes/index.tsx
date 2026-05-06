@@ -4,6 +4,13 @@ import { Column } from "~/components/column"
 
 export const Route = createFileRoute("/")({
   component: IndexComponent,
+  head: () => ({
+    meta: [
+      { title: "即刻News - 实时新闻聚合阅读器" },
+      { name: "description", content: "汇集全球热点新闻，按实时 / 最热 / 国内 / 国际 / 科技 / 财经分类聚合，提供优雅的阅读体验。" },
+    ],
+    links: [{ rel: "canonical", href: "https://jike.news/" }],
+  }),
 })
 
 function IndexComponent() {
