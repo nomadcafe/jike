@@ -481,7 +481,6 @@
   },
   "nytimes-cn": {
     "name": "纽约时报中文网",
-    "type": "realtime",
     "column": "world",
     "home": "https://cn.nytimes.com",
     "color": "gray",
