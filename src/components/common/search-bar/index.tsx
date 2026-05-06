@@ -1,4 +1,5 @@
 import { Command } from "cmdk"
+import * as Dialog from "@radix-ui/react-dialog"
 import { useMount } from "react-use"
 import type { SourceID } from "@shared/types"
 import { useMemo, useRef, useState } from "react"
@@ -7,6 +8,19 @@ import { OverlayScrollbar } from "../overlay-scrollbar"
 import { CardWrapper } from "~/components/column/card"
 
 import "./cmdk.css"
+
+// 视觉上隐藏但保留给屏幕阅读器和 Radix 内部检查
+const visuallyHidden = {
+  position: "absolute",
+  width: 1,
+  height: 1,
+  padding: 0,
+  margin: -1,
+  overflow: "hidden",
+  clip: "rect(0,0,0,0)",
+  whiteSpace: "nowrap",
+  borderWidth: 0,
+} as const
 
 interface SourceItemProps {
   id: SourceID
@@ -80,6 +94,9 @@ export function SearchBar() {
         }
       }}
     >
+      {/* Radix Dialog 要求有 Title 和 Description 才能 a11y 合规；视觉上隐藏 */}
+      <Dialog.Title style={visuallyHidden}>搜索</Dialog.Title>
+      <Dialog.Description style={visuallyHidden}>搜索新闻源</Dialog.Description>
       <Command.Input
         ref={inputRef}
         autoFocus
