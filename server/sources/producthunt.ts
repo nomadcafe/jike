@@ -2,11 +2,11 @@ import process from "node:process"
 import type { NewsItem } from "@shared/types"
 
 export default defineSource(async () => {
+  // 没配 token 时返回空列表而不是 throw，避免前端控制台一直 500 报错噪音。
+  // 自部署只要往 .env.server 加 PRODUCTHUNT_API_TOKEN 就会自动恢复。
   const apiToken = process.env.PRODUCTHUNT_API_TOKEN
+  if (!apiToken) return []
   const token = `Bearer ${apiToken}`
-  if (!apiToken) {
-    throw new Error("PRODUCTHUNT_API_TOKEN is not set")
-  }
   const query = `
     query {
       posts(first: 30, order: VOTES) {
