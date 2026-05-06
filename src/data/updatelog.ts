@@ -18,9 +18,26 @@ export const updatelog: UpdateGroup[] = [
     entries: [
       {
         type: "source",
+        scope: "EU-Startups",
+        title: "新增「科技」列源",
+        description: "聚合 eu-startups.com 官方 RSS，10 条最新欧洲创业公司动态、融资和产品发布。在科技列查看。",
+      },
+      {
+        type: "fix",
+        scope: "RSS 抓取",
+        title: "兼容 application/rss+xml 类 MIME",
+        description: "之前只有 text/xml 这种 Content-Type 的源能正常解析；像 EU-Startups 这种返回 application/rss+xml 的，ofetch 不当字符串处理，XMLParser 拿到空对象、整源挂掉。强制按 text 收响应，所有 RSS 源都更稳了。",
+      },
+      {
+        type: "fix",
+        scope: "登录探测",
+        title: "修复 506 错误",
+      },
+      {
+        type: "source",
         scope: "纽约时报中文网",
-        title: "改用官方 RSS 源",
-        description: "首页头条与文章实际标题不一致，且 HTML 抓取容易拿到旧版本。换成 cn.nytimes.com 提供的官方 RSS。",
+        title: "修复实时更新相关问题",
+        description: "改用官方 RSS 源拿最新内容，并从「实时」列调整到「国际」列。",
       },
       {
         type: "source",
