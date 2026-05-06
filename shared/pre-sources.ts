@@ -437,6 +437,13 @@ export const originSources = {
     home: "https://www.startupdaily.net",
     interval: Time.Common,
   },
+  "techcrunch": {
+    name: "TechCrunch",
+    color: "green",
+    column: "tech",
+    home: "https://techcrunch.com",
+    interval: Time.Common,
+  },
   "douban": {
     name: "豆瓣",
     column: "china",
