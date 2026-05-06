@@ -89,4 +89,14 @@ export const updatelog: UpdateGroup[] = [
       },
     ],
   },
+  {
+    date: "2025-10-25",
+    entries: [
+      {
+        type: "source",
+        scope: "纽约时报中文网",
+        title: "新增源",
+      },
+    ],
+  },
 ]
