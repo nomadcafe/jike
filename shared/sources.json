@@ -183,13 +183,6 @@
     "color": "gray",
     "interval": 1800000
   },
-  "sputniknewscn": {
-    "name": "卫星通讯社",
-    "column": "world",
-    "home": "https://sputniknews.cn",
-    "color": "orange",
-    "interval": 600000
-  },
   "cankaoxiaoxi": {
     "name": "参考消息",
     "column": "world",
