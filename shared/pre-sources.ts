@@ -444,6 +444,20 @@ export const originSources = {
     home: "https://techcrunch.com",
     interval: Time.Common,
   },
+  "crunchbase": {
+    name: "Crunchbase News",
+    color: "indigo",
+    column: "tech",
+    home: "https://news.crunchbase.com",
+    interval: Time.Common,
+  },
+  "sifted": {
+    name: "Sifted",
+    color: "purple",
+    column: "tech",
+    home: "https://sifted.eu",
+    interval: Time.Common,
+  },
   "douban": {
     name: "豆瓣",
     column: "china",
