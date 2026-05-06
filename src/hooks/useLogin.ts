@@ -15,11 +15,7 @@ const enableLoginAtom = atomWithStorage<{
 enableLoginAtom.onMount = (set) => {
   myFetch("/enable-login").then((r) => {
     set(r)
-  }).catch((e) => {
-    if (e.statusCode === 506) {
-      set({ enable: false })
-      localStorage.removeItem("jwt")
-    }
+    if (!r.enable) localStorage.removeItem("jwt")
   })
 }
 
