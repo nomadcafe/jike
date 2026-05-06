@@ -486,6 +486,13 @@
     "color": "gray",
     "interval": 1800000
   },
+  "eu-startups": {
+    "name": "EU-Startups",
+    "column": "tech",
+    "home": "https://www.eu-startups.com",
+    "color": "blue",
+    "interval": 1800000
+  },
   "douban": {
     "title": "热门电影",
     "name": "豆瓣",

@@ -423,6 +423,13 @@ export const originSources = {
     home: "https://cn.nytimes.com",
     interval: Time.Common,
   },
+  "eu-startups": {
+    name: "EU-Startups",
+    color: "blue",
+    column: "tech",
+    home: "https://www.eu-startups.com",
+    interval: Time.Common,
+  },
   "douban": {
     name: "豆瓣",
     column: "china",
