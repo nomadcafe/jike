@@ -422,7 +422,6 @@ export const originSources = {
     column: "world",
     home: "https://cn.nytimes.com",
     interval: Time.Common,
-    type: "realtime",
   },
   "douban": {
     name: "豆瓣",
