@@ -30,56 +30,64 @@ const quick = defineSource(async () => {
   return news
 })
 
+// /hot-list/renqi/... 已挂在 Cloudflare 反爬墙后，HTML 抓不到内容。
+// 改走移动端官方 JSON 接口，返回结构稳定的 hotRankList。
+interface RenqiResp {
+  code: number
+  data?: {
+    hotRankList?: Array<{
+      itemId: number
+      templateMaterial: {
+        widgetTitle: string
+        authorName: string
+        statRead: number
+        publishTime: number
+      }
+    }>
+  }
+}
+
 const renqi = defineSource(async () => {
-  const baseURL = "https://36kr.com"
   const formatted = dayjs().format("YYYY-MM-DD")
-  const url = `${baseURL}/hot-list/renqi/${formatted}/1`
-
-  const response = await myFetch<any>(url, {
-    headers: {
-      "User-Agent":
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
-      "Referer": "https://www.freebuf.com/",
-      "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
-    },
-  })
-
-  const $ = load(response)
-  const articles: NewsItem[] = []
-
-  // 单条新闻选择器
-  const $items = $(".article-item-info")
-
-  $items.each((_, el) => {
-    const $el = $(el)
-
-    // 标题和链接
-    const $a = $el.find("a.article-item-title.weight-bold")
-    const href = $a.attr("href") || ""
-    const title = $a.text().trim()
-
-    const description = $el.find("a.article-item-description.ellipsis-2").text().trim()
-
-    // 作者
-    const author = $el.find(".kr-flow-bar-author").text().trim()
-
-    // 热度
-    const hot = $el.find(".kr-flow-bar-hot span").text().trim()
-
-    if (href && title) {
-      articles.push({
-        url: href.startsWith("http") ? href : `${baseURL}${href}`,
-        title,
-        id: href.slice(3), // 简化处理
-        // url.slice(url.lastIndexOf("/") + 1)
-        extra: {
-          info: `${author}  |  ${hot}`,
-          hover: description,
+  const resp = await myFetch<RenqiResp>(
+    "https://gateway.36kr.com/api/mis/nav/home/nav/rank/hot",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: {
+        partner_id: "wap",
+        param: {
+          hotlistCategory: "renqi",
+          hotlistDate: formatted,
+          pageSize: 30,
+          pageEvent: 1,
+          pageCallback: "",
+          siteId: 1,
+          platformId: 2,
         },
-      })
-    }
-  })
-  return articles
+        timestamp: Date.now(),
+      },
+    },
+  )
+
+  const list = resp?.data?.hotRankList ?? []
+  return list
+    .filter(it => it?.itemId && it?.templateMaterial?.widgetTitle)
+    .map((it) => {
+      const m = it.templateMaterial
+      const read = m.statRead >= 10000
+        ? `${(m.statRead / 10000).toFixed(1)}万阅读`
+        : `${m.statRead}阅读`
+      return {
+        id: String(it.itemId),
+        title: m.widgetTitle,
+        url: `https://36kr.com/p/${it.itemId}`,
+        pubDate: m.publishTime,
+        extra: {
+          info: m.authorName ? `${m.authorName}  |  ${read}` : read,
+        },
+      }
+    })
 })
 
 export default defineSource({
