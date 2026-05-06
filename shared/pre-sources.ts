@@ -458,6 +458,13 @@ export const originSources = {
     home: "https://sifted.eu",
     interval: Time.Common,
   },
+  "pedaily": {
+    name: "投资界",
+    color: "red",
+    column: "tech",
+    home: "https://www.pedaily.cn",
+    interval: Time.Common,
+  },
   "douban": {
     name: "豆瓣",
     column: "china",

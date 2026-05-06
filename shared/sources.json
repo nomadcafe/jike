@@ -521,6 +521,13 @@
     "color": "purple",
     "interval": 1800000
   },
+  "pedaily": {
+    "name": "投资界",
+    "column": "tech",
+    "home": "https://www.pedaily.cn",
+    "color": "red",
+    "interval": 1800000
+  },
   "douban": {
     "title": "热门电影",
     "name": "豆瓣",
