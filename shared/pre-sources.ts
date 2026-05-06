@@ -155,12 +155,6 @@ export const originSources = {
     color: "gray",
     home: "https://www.thepaper.cn",
   },
-  "sputniknewscn": {
-    name: "卫星通讯社",
-    color: "orange",
-    column: "world",
-    home: "https://sputniknews.cn",
-  },
   "cankaoxiaoxi": {
     name: "参考消息",
     color: "red",
@@ -352,13 +346,6 @@ export const originSources = {
         home: "https://linux.do/hot",
       },
     },
-  },
-  "ghxi": {
-    name: "果核剥壳",
-    column: "china",
-    color: "yellow",
-    home: "https://www.ghxi.com/",
-    disable: true,
   },
   "smzdm": {
     name: "什么值得买",
