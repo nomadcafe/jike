@@ -493,6 +493,13 @@
     "color": "blue",
     "interval": 1800000
   },
+  "startupdaily": {
+    "name": "Startup Daily",
+    "column": "tech",
+    "home": "https://www.startupdaily.net",
+    "color": "teal",
+    "interval": 1800000
+  },
   "douban": {
     "title": "热门电影",
     "name": "豆瓣",
