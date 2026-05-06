@@ -130,7 +130,7 @@ function toDurations(matches: string[]) {
 
   let p = 0
   for (const m of matches) {
-    for (; p <= patternSize; p++) {
+    for (; p < patternSize; p++) {
       const match = patterns[p].regExp.exec(m)
       if (match) {
         durations[patterns[p].unit] = match[1]
