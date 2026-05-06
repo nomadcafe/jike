@@ -4,7 +4,9 @@ import type { RSSInfo } from "../types"
 export async function rss2json(url: string): Promise<RSSInfo | undefined> {
   if (!/^https?:\/\/[^\s$.?#].\S*/i.test(url)) return
 
-  const data = await myFetch(url)
+  // 强制按 text 收，避免 ofetch 对 application/rss+xml 这种 Content-Type 自动 JSON.parse / 返回 Blob，
+  // 拿到的 data 就不是字符串，XMLParser 解析后 result.rss 会是 undefined。
+  const data = await myFetch(url, { responseType: "text" }) as string
 
   const xml = new XMLParser({
     attributeNamePrefix: "",
