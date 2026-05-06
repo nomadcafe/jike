@@ -8,13 +8,16 @@ const express = defineSource(async () => {
   const news: NewsItem[] = []
   // 页面改版后 .title_name 由 <a> 变成了 <span>，URL 不再在标题节点上。
   // 改从 .news-list 上的 data-id 拼接：/cn/fastshort/<data-id>。
+  // 同一 data-id 在页面里会渲染两份（移动/桌面双布局），用 Set 去重避免 React key 冲突。
+  const seen = new Set<string>()
   $(".news-list").each((_, el) => {
     const $el = $(el)
     const dataId = $el.attr("data-id")
     const date = $el.attr("data-date")
     const titleText = $el.find(".title_name").first().text().trim()
     const title = titleText.match(/【(.+)】/)?.[1] ?? titleText
-    if (dataId && date && titleText) {
+    if (dataId && date && titleText && !seen.has(dataId)) {
+      seen.add(dataId)
       const url = `/cn/fastshort/${dataId}`
       news.push({
         url: baseURL + url,
