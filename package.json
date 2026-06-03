@@ -116,7 +116,11 @@
       "simple-git-hooks",
       "unrs-resolver",
       "workerd"
-    ]
+    ],
+    "overrides": {
+      "vite-plugin-with-nitro>h3": "npm:h3-nightly@1.15.4-20250730-094032-325a62b",
+      "nitro-go>h3": "npm:h3-nightly@1.15.4-20250730-094032-325a62b"
+    }
   },
   "resolutions": {
     "cross-spawn": ">=7.0.6",
