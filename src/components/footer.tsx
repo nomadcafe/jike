@@ -18,7 +18,7 @@ export function Footer() {
         rel="noopener noreferrer"
         className="op-70 hover:(op-100 color-primary) transition-all"
       >
-        no.money
+        No Money
       </a>
     </div>
   )
