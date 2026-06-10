@@ -1,15 +1,24 @@
 import process from "node:process"
+import dayjs from "dayjs/esm"
+import timezonePlugin from "dayjs/esm/plugin/timezone"
+import utcPlugin from "dayjs/esm/plugin/utc"
 import type { NewsItem } from "@shared/types"
 
+dayjs.extend(utcPlugin)
+dayjs.extend(timezonePlugin)
+
+const feed = defineRSSSource("https://www.producthunt.com/feed")
+
 export default defineSource(async () => {
-  // 没配 token 时返回空列表而不是 throw，避免前端控制台一直 500 报错噪音。
-  // 自部署只要往 .env.server 加 PRODUCTHUNT_API_TOKEN 就会自动恢复。
+  // 没配 token 时回退到官方 RSS（/feed）而不是 throw，避免前端控制台一直 500 报错噪音。
+  // 自部署只要往 .env.server 加 PRODUCTHUNT_API_TOKEN 就会切回 GraphQL 接口。
   const apiToken = process.env.PRODUCTHUNT_API_TOKEN
-  if (!apiToken) return []
-  const token = `Bearer ${apiToken}`
+  if (!apiToken) return feed()
+
+  const postedAfter = dayjs().tz("America/Los_Angeles").startOf("day").toISOString()
   const query = `
-    query {
-      posts(first: 30, order: VOTES) {
+    query($postedAfter: DateTime!) {
+      posts(first: 30, order: RANKING, postedAfter: $postedAfter) {
         edges {
           node {
             id
@@ -24,23 +33,21 @@ export default defineSource(async () => {
     }
   `
 
-  const response: any = await myFetch("https://api.producthunt.com/v2/api/graphql", {
-    method: "POST",
-    headers: {
-      "Authorization": token,
-      "Content-Type": "application/json",
-      "Accept": "application/json",
-    },
-    body: JSON.stringify({ query }),
-  })
+  try {
+    const response: any = await myFetch("https://api.producthunt.com/v2/api/graphql", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${apiToken}`,
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+      },
+      body: JSON.stringify({ query, variables: { postedAfter } }),
+    })
 
-  const news: NewsItem[] = []
-  const posts = response?.data?.posts?.edges || []
-
-  for (const edge of posts) {
-    const post = edge.node
-    if (post.id && post.name) {
-      news.push({
+    const posts = response?.data?.posts?.edges || []
+    const news: NewsItem[] = posts.map((edge: any) => {
+      const post = edge.node
+      return {
         id: post.id,
         title: post.name,
         url: post.url || `https://www.producthunt.com/posts/${post.slug}`,
@@ -48,9 +55,11 @@ export default defineSource(async () => {
           info: ` △︎ ${post.votesCount || 0}`,
           hover: post.tagline,
         },
-      })
-    }
-  }
+      }
+    }).filter((post: NewsItem) => post.id && post.title)
 
-  return news
+    return news.length ? news : feed()
+  } catch {
+    return feed()
+  }
 })
