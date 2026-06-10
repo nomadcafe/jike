@@ -27,7 +27,7 @@ export function Footer() {
         rel="noopener noreferrer"
         className="op-70 hover:(op-100 color-primary) transition-all"
       >
-        WeCV.ai
+        WeCV
       </a>
     </div>
   )
