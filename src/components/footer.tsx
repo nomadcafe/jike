@@ -12,6 +12,7 @@ export function Footer() {
         更新日志
       </Link>
       <span className="op-40">·</span>
+      <span className="op-40">友情链接</span>
       <a
         href="https://no.money"
         target="_blank"
@@ -19,6 +20,14 @@ export function Footer() {
         className="op-70 hover:(op-100 color-primary) transition-all"
       >
         No Money
+      </a>
+      <a
+        href="https://wecv.ai"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="op-70 hover:(op-100 color-primary) transition-all"
+      >
+        WeCV.ai
       </a>
     </div>
   )
