@@ -19,7 +19,7 @@ export function Footer() {
         rel="noopener noreferrer"
         className="op-70 hover:(op-100 color-primary) transition-all"
       >
-        No Money
+        NoMoney
       </a>
       <a
         href="https://wecv.ai"
