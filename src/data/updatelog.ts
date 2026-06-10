@@ -14,6 +14,29 @@ export interface UpdateGroup {
 
 export const updatelog: UpdateGroup[] = [
   {
+    date: "2026-06-10",
+    entries: [
+      {
+        type: "source",
+        scope: "AIHOT",
+        title: "新增「AI 热榜」源",
+        description: "聚合 aihot.virxact.com 的 AI 资讯热榜，覆盖大模型、产品与行业动态。在科技列查看。",
+      },
+      {
+        type: "source",
+        scope: "ProductHunt",
+        title: "改用当日热门榜，未配 token 时回退官方 RSS",
+        description: "榜单改按当天 RANKING 排序，更贴近「今日热门」；没有配置 API token 时自动回退到 producthunt.com 官方 RSS，仍能看到内容而不是空列表。",
+      },
+      {
+        type: "chore",
+        scope: "底层维护",
+        title: "同步上游并精简依赖",
+        description: "合并上游 newsnow v0.0.40：移除不再使用的内置 MCP 接口、去掉 Zod 依赖缩减包体积，并修复若干源（靠谱新闻、Solidot、财联社等）的抓取稳定性。",
+      },
+    ],
+  },
+  {
     date: "2026-05-07",
     entries: [
       {
