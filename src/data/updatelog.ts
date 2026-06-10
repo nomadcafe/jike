@@ -31,8 +31,8 @@ export const updatelog: UpdateGroup[] = [
       {
         type: "chore",
         scope: "底层维护",
-        title: "同步上游并精简依赖",
-        description: "合并上游 newsnow v0.0.40：移除不再使用的内置 MCP 接口、去掉 Zod 依赖缩减包体积，并修复若干源（靠谱新闻、Solidot、财联社等）的抓取稳定性。",
+        title: "精简依赖并修复若干源",
+        description: "移除不再使用的内置接口、去掉冗余依赖以缩减包体积，并修复靠谱新闻、Solidot、财联社等源的抓取稳定性。",
       },
     ],
   },
