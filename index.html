@@ -1,10 +1,21 @@
 <!doctype html>
-<html lang="zh-CN" class="dark">
+<html lang="zh-CN">
 
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/png" href="/icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- 首屏应用主题，避免刷新闪烁；默认浅色 -->
+  <script>
+    (function () {
+      try {
+        var s = localStorage.getItem("color-scheme")
+        var v = s ? JSON.parse(s) : "light"
+        var dark = v === "dark" || (v === "auto" && matchMedia("(prefers-color-scheme: dark)").matches)
+        if (dark) document.documentElement.classList.add("dark")
+      } catch (e) {}
+    })()
+  </script>
   <!-- SEO Meta Tags -->
   <meta name="description" content="即刻News - 实时新闻聚合阅读器，汇集全球热点新闻，提供优雅的阅读体验" />
   <meta name="keywords" content="新闻,科技新闻,实时新闻,新闻聚合,即刻News" />
