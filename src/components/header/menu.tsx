@@ -1,18 +1,19 @@
 import { motion } from "framer-motion"
 import { useState } from "react"
+import { useDark } from "~/hooks/useDark"
 import { useLogin } from "~/hooks/useLogin"
 
-// function ThemeToggle() {
-//   const { isDark, toggleDark } = useDark()
-//   return (
-//     <li onClick={toggleDark} className="cursor-pointer [&_*]:cursor-pointer transition-all">
-//       <span className={$("inline-block", isDark ? "i-ph-moon-stars-duotone" : "i-ph-sun-dim-duotone")} />
-//       <span>
-//         {isDark ? "浅色模式" : "深色模式"}
-//       </span>
-//     </li>
-//   )
-// }
+function ThemeToggle() {
+  const { isDark, toggleDark } = useDark()
+  return (
+    <li onClick={toggleDark} className="cursor-pointer [&_*]:cursor-pointer transition-all">
+      <span className={$("inline-block", isDark ? "i-ph-sun-dim-duotone" : "i-ph-moon-stars-duotone")} />
+      <span>
+        {isDark ? "浅色模式" : "深色模式"}
+      </span>
+    </li>
+  )
+}
 
 export function Menu() {
   const { loggedIn, login, logout, userInfo, enableLogin } = useLogin()
@@ -66,7 +67,7 @@ export function Menu() {
                       <span>Github 账号登录</span>
                     </li>
                   ))}
-              {/* <ThemeToggle /> */}
+              <ThemeToggle />
             </ol>
           </motion.div>
         </div>
