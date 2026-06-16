@@ -35,7 +35,8 @@ export const CardWrapper = forwardRef<HTMLElement, ItemsProps>(({ id, isDragging
       className={$(
         "flex flex-col h-500px rounded-2xl p-4 cursor-default",
         // "backdrop-blur-5",
-        "transition-opacity-300 border border-neutral-400/10",
+        "transition-opacity-300 border border-black/8 dark:border-white/8",
+        "shadow-sm shadow-black/5 dark:shadow-none",
         isDragging && "op-50",
         `bg-${sources[id].color}-500 dark:bg-${sources[id].color} bg-op-15!`,
       )}
