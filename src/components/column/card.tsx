@@ -35,9 +35,9 @@ export const CardWrapper = forwardRef<HTMLElement, ItemsProps>(({ id, isDragging
       className={$(
         "flex flex-col h-500px rounded-2xl p-4 cursor-default",
         // "backdrop-blur-5",
-        "transition-opacity-300",
+        "transition-opacity-300 border border-neutral-400/10",
         isDragging && "op-50",
-        `bg-${sources[id].color}-500 dark:bg-${sources[id].color} bg-op-40!`,
+        `bg-${sources[id].color}-500 dark:bg-${sources[id].color} bg-op-15!`,
       )}
       style={{
         transformOrigin: "50% 50%",
@@ -163,7 +163,7 @@ function NewsCard({ id, setHandleRef }: NewsCardProps) {
         defer
       >
         <div className={$("transition-opacity-500", isFetching && "op-20")}>
-          {!!data?.items?.length && (sources[id].type === "hottest" ? <NewsListHot items={data.items} /> : <NewsListTimeLine items={data.items} />)}
+          {!!data?.items?.length && (sources[id].type === "hottest" ? <NewsListHot items={data.items} color={sources[id].color} /> : <NewsListTimeLine items={data.items} />)}
         </div>
       </OverlayScrollbar>
     </>
@@ -226,10 +226,10 @@ function NewsUpdatedTime({ date }: { date: string | number }) {
   const relativeTime = useRelativeTime(date)
   return <>{relativeTime}</>
 }
-function NewsListHot({ items }: { items: NewsItem[] }) {
+function NewsListHot({ items, color }: { items: NewsItem[], color: string }) {
   const { width } = useWindowSize()
   return (
-    <ol className="flex flex-col gap-2">
+    <ol className="flex flex-col gap-2.5">
       {items?.map((item, i) => (
         <a
           href={width < 768 ? item.mobileUrl || item.url : item.url}
@@ -237,15 +237,19 @@ function NewsListHot({ items }: { items: NewsItem[] }) {
           key={item.id}
           title={item.extra?.hover}
           className={$(
-            "flex gap-2 items-center items-stretch relative cursor-pointer [&_*]:cursor-pointer transition-all",
-            "hover:bg-neutral-400/10 rounded-md pr-1 visited:(text-neutral-400)",
+            "flex gap-2 items-stretch relative cursor-pointer [&_*]:cursor-pointer transition-all",
+            "hover:bg-neutral-400/10 rounded-md py-0.5 pr-1 visited:(text-neutral-400)",
           )}
         >
-          <span className={$("bg-neutral-400/10 min-w-6 flex justify-center items-center rounded-md text-sm")}>
+          <span className={$(
+            "min-w-6 flex justify-center items-center rounded-md text-sm font-mono font-semibold",
+            i < 3 ? `color-${color} bg-${color} bg-op-15!` : "bg-neutral-400/10 text-neutral-400/80",
+          )}
+          >
             {i + 1}
           </span>
           {!!item.extra?.diff && <DiffNumber diff={item.extra.diff} />}
-          <span className="self-start line-height-none">
+          <span className="self-center leading-snug">
             <span className="mr-2 text-base">
               {item.title}
             </span>
@@ -262,7 +266,7 @@ function NewsListHot({ items }: { items: NewsItem[] }) {
 function NewsListTimeLine({ items }: { items: NewsItem[] }) {
   const { width } = useWindowSize()
   return (
-    <ol className="border-s border-neutral-400/50 flex flex-col ml-1">
+    <ol className="border-s border-neutral-400/50 flex flex-col gap-1.5 ml-1">
       {items?.map(item => (
         <li key={`${item.id}-${item.pubDate || item?.extra?.date || ""}`} className="flex flex-col">
           <span className="flex items-center gap-1 text-neutral-400/50 ml--1px">
@@ -276,7 +280,7 @@ function NewsListTimeLine({ items }: { items: NewsItem[] }) {
           </span>
           <a
             className={$(
-              "ml-2 px-1 hover:bg-neutral-400/10 rounded-md visited:(text-neutral-400/80)",
+              "ml-2 px-1 leading-snug hover:bg-neutral-400/10 rounded-md visited:(text-neutral-400/80)",
               "cursor-pointer [&_*]:cursor-pointer transition-all",
             )}
             href={width < 768 ? item.mobileUrl || item.url : item.url}
