@@ -18,15 +18,14 @@ export default defineConfig({
       if (hex) {
         return {
           "background-image": `radial-gradient(ellipse 80% 80% at 50% -30%,
-         rgba(${hex2rgba(hex)?.join(", ")}, 0.3), rgba(255, 255, 255, 0));`,
+         rgba(${hex2rgba(hex)?.join(", ")}, 0.12), rgba(255, 255, 255, 0));`,
         }
       }
     }],
     [
       "font-brand",
       {
-        "font-family": `"Baloo 2", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace; `,
+        "font-family": `"Bricolage Grotesque", "Baloo 2", "PingFang SC", "Microsoft YaHei", ui-sans-serif, system-ui, sans-serif; `,
       },
     ],
   ],
@@ -44,6 +43,13 @@ export default defineConfig({
   extendTheme: (theme) => {
     // @ts-expect-error >_<
     theme.colors.primary = theme.colors.red
+    // @ts-expect-error >_<
+    theme.fontFamily = {
+      // @ts-expect-error >_<
+      ...theme.fontFamily,
+      sans: `"DM Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, -apple-system, sans-serif`,
+      mono: `"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace`,
+    }
     return theme
   },
 })
