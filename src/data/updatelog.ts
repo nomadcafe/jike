@@ -14,6 +14,17 @@ export interface UpdateGroup {
 
 export const updatelog: UpdateGroup[] = [
   {
+    date: "2026-06-16",
+    entries: [
+      {
+        type: "feat",
+        scope: "界面",
+        title: "视觉焕新：字体 / 配色 / 信息层级",
+        description: "正文与品牌换用 DM Sans、Bricolage Grotesque、JetBrains Mono，整体观感更现代；收敛卡片配色，来源色由整片铺底改为点缀，阅读时不再满屏发红；热榜前三名序号用来源色高亮、加大行距与留白，扫读更轻松。",
+      },
+    ],
+  },
+  {
     date: "2026-06-10",
     entries: [
       {
