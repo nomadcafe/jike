@@ -29,6 +29,8 @@ function RootComponent() {
   useOnReload()
   useSync()
   usePWA()
+  // 始终挂载，确保主题切换即时同步到 <html>（不依赖下拉菜单是否展开）
+  useDark()
   return (
     <>
       <HeadContent />
