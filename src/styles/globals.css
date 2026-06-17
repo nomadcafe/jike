@@ -14,6 +14,31 @@ body,
   src: url("/Baloo2-Bold.subset.ttf");
 }
 
+/* 自托管字体，避免依赖被墙/缓慢的 Google Fonts CDN */
+@font-face {
+  font-family: 'DM Sans';
+  src: url("/fonts/dm-sans-latin.woff2") format("woff2");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Bricolage Grotesque';
+  src: url("/fonts/bricolage-grotesque-latin.woff2") format("woff2");
+  font-weight: 400 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url("/fonts/jetbrains-mono-latin.woff2") format("woff2");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 
 html.dark {
   color-scheme: dark;
