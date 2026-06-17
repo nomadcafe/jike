@@ -14,6 +14,29 @@ export interface UpdateGroup {
 
 export const updatelog: UpdateGroup[] = [
   {
+    date: "2026-06-17",
+    entries: [
+      {
+        type: "feat",
+        scope: "主题",
+        title: "新增深色 / 浅色切换，默认浅色",
+        description: "顶部「•••」菜单可一键切换深色 / 浅色，默认改为浅色；刷新后保留上次选择，且不再出现主题闪烁。",
+      },
+      {
+        type: "feat",
+        scope: "界面",
+        title: "卡片加载与失败状态优化",
+        description: "首次加载显示骨架屏；抓取失败时显示「加载失败」并提供一键重试；刷新已有内容时保留旧列表淡出，不再整卡闪烁。",
+      },
+      {
+        type: "chore",
+        scope: "字体",
+        title: "字体改为站内自托管",
+        description: "三款界面字体不再从 Google Fonts CDN 加载，改为站内托管，避免该域名在部分网络下被墙或缓慢导致字体显示异常。",
+      },
+    ],
+  },
+  {
     date: "2026-06-16",
     entries: [
       {
