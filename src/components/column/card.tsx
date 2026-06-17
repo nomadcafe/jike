@@ -155,7 +155,6 @@ function NewsCard({ id, setHandleRef }: NewsCardProps) {
       <OverlayScrollbar
         className={$([
           "h-full p-2 overflow-y-auto rounded-2xl bg-base bg-op-70!",
-          isFetching && `animate-pulse`,
           `sprinkle-${sources[id].color}`,
         ])}
         options={{
@@ -163,11 +162,54 @@ function NewsCard({ id, setHandleRef }: NewsCardProps) {
         }}
         defer
       >
-        <div className={$("transition-opacity-500", isFetching && "op-20")}>
-          {!!data?.items?.length && (sources[id].type === "hottest" ? <NewsListHot items={data.items} color={sources[id].color} /> : <NewsListTimeLine items={data.items} />)}
+        <div className={$("h-full transition-opacity-500", isFetching && data?.items?.length && "op-20")}>
+          {data?.items?.length
+            ? (sources[id].type === "hottest"
+                ? <NewsListHot items={data.items} color={sources[id].color} />
+                : <NewsListTimeLine items={data.items} />)
+            : isError
+              ? <CardState type="error" color={sources[id].color} onRetry={() => refresh(id)} />
+              : isFetching
+                ? <CardSkeleton />
+                : <CardState type="empty" color={sources[id].color} />}
         </div>
       </OverlayScrollbar>
     </>
+  )
+}
+
+function CardSkeleton() {
+  return (
+    <div className="flex flex-col gap-2.5 animate-pulse" aria-hidden>
+      {Array.from({ length: 9 }).map((_, i) => (
+        <div key={i} className="flex gap-2 items-center">
+          <span className="min-w-6 h-5 rounded-md bg-neutral-400/15" />
+          <span
+            className="h-3.5 rounded bg-neutral-400/15"
+            style={{ width: `${72 - (i % 4) * 12}%` }}
+          />
+        </div>
+      ))}
+    </div>
+  )
+}
+
+function CardState({ type, color, onRetry }: { type: "error" | "empty", color: string, onRetry?: () => void }) {
+  const isError = type === "error"
+  return (
+    <div className="h-full min-h-50 flex flex-col items-center justify-center gap-2 text-center op-80">
+      <span className={$("text-3xl", isError ? `i-ph:cloud-warning-duotone color-${color}` : "i-ph:tray-duotone op-50")} />
+      <span className="text-sm op-70">{isError ? "加载失败" : "暂无内容"}</span>
+      {isError && onRetry && (
+        <button
+          type="button"
+          onClick={onRetry}
+          className={$("mt-1 text-xs px-2.5 py-1 rounded-md transition-all cursor-pointer", `color-${color} bg-${color} bg-op-15! hover:bg-op-25!`)}
+        >
+          点击重试
+        </button>
+      )}
+    </div>
   )
 }
 
