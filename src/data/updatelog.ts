@@ -14,6 +14,29 @@ export interface UpdateGroup {
 
 export const updatelog: UpdateGroup[] = [
   {
+    date: "2026-10-27",
+    entries: [
+      {
+        type: "feat",
+        scope: "栏目",
+        title: "新增「体育」与「更新」栏目",
+        description: "新增「体育」栏目，收录懂球帝头条与虎扑主干道；新增「更新」栏目，集中展示近期修复或新增的源。「最热」「实时」内的源改为固定顺序排列。",
+      },
+      {
+        type: "fix",
+        scope: "源",
+        title: "修复若干源的抓取",
+        description: "修复 AIHOT、靠谱新闻、Hacker News、远景论坛、FreeBuf 等源的抓取稳定性。",
+      },
+      {
+        type: "chore",
+        scope: "底层维护",
+        title: "依赖安全升级与 PWA 更新修复",
+        description: "升级依赖以修复已知安全漏洞；修复 PWA 有新版本时无法正常提示更新的问题。",
+      },
+    ],
+  },
+  {
     date: "2026-06-17",
     entries: [
       {
